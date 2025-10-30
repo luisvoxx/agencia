@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Implementamos I.A, automações e trackeamento para empresas que querem escalar com dados reais.">
+    <title>I.A, Automação e Trackeamento | Escale com Dados Reais</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #000000;
+            --purple-primary: #8b5cf6;
+            --purple-secondary: #a855f7;
+            --purple-light: #c084fc;
+            --purple-dark: #7c3aed;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --glass-bg: rgba(139, 92, 246, 0.05);
+            --glass-border: rgba(139, 92, 246, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(10, 10, 10, 0.95);
+            box-shadow: 0 4px 30px rgba(139, 92, 246, 0.1);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-cta {
+            display: none;
+        }
+
+        .nav-cta.show {
+            display: block;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-secondary));
+            color: var(--text-primary);
+            box-shadow: 0 10px 40px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--purple-secondary), var(--purple-light));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn-primary:hover::before {
+            opacity: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 50px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Section */
+        section {
+            padding: 8rem 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .section-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 6rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 7vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, #ffffff 0%, var(--purple-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.6rem);
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .hero-cta {
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-note {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Grid Cards */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(168, 85, 247, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--purple-primary);
+            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.2);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Problems Section */
+        .problems-list {
+            max-width: 900px;
+            margin: 4rem auto 0;
+        }
+
+        .problem-item {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-left: 3px solid var(--purple-primary);
+            border-radius: 12px;
+            padding: 1.8rem 2rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .problem-item::before {
+            content: '✗';
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: var(--purple-primary);
+            opacity: 0.2;
+        }
+
+        .problem-item:hover {
+            transform: translateX(10px);
+            border-left-color: var(--purple-light);
+            box-shadow: 0 10px 40px rgba(139, 92, 246, 0.15);
+        }
+
+        .problem-text {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Solutions Grid */
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+        }
+
+        .solution-card {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(168, 85, 247, 0.05));
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .solution-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .solution-card:hover::after {
+            opacity: 1;
+        }
+
+        .solution-card:hover {
+            transform: scale(1.05);
+            border-color: var(--purple-primary);
+            box-shadow: 0 25px 70px rgba(139, 92, 246, 0.25);
+        }
+
+        .solution-number {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-secondary));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .solution-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .solution-description {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Trust Section */
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .trust-item {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .trust-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-secondary));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.3);
+        }
+
+        .trust-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .trust-description {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(168, 85, 247, 0.05));
+            border-radius: 30px;
+            padding: 5rem 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin: 4rem 0;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(139, 92, 246, 0.2), transparent 60%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+
+        .cta-note {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-top: 1.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--glass-border);
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .footer-links {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--purple-primary);
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .scale-in.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-cta {
+                display: none;
+            }
+
+            section {
+                padding: 5rem 0;
+            }
+
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            .hero {
+                padding-top: 5rem;
+                min-height: 90vh;
+            }
+
+            .grid-cards {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .solutions-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .trust-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .cta-section {
+                padding: 3rem 2rem;
+                margin: 2rem 0;
+            }
+
+            .btn {
+                padding: 0.9rem 1.5rem;
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .card {
+                padding: 2rem 1.5rem;
+            }
+
+            .solution-card {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        /* Background Grid */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Grid -->
+    <div class="bg-grid"></div>
+
+    <!-- Header -->
+    <header id="header">
+        <nav>
+            <div class="logo">AI·SCALE</div>
+            <button class="menu-toggle" id="menuToggle">☰</button>
+            <a href="#diagnostico" class="btn btn-primary nav-cta">
+                <span>📈 Diagnóstico Gratuito</span>
+            </a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content fade-in">
+                <h1 class="hero-title">
+                    Implementamos I.A, automações e trackeamento para empresas que querem escalar com dados reais.
+                </h1>
+                <p class="hero-subtitle">
+                    Chega de achismos. Nós medimos, automatizamos e resolvemos o que trava o seu crescimento.
+                </p>
+                <div class="hero-cta">
+                    <a href="#diagnostico" class="btn btn-primary">
+                        <span>📈 Fazer meu diagnóstico gratuito</span>
+                    </a>
+                </div>
+                <p class="hero-note">
+                    Em até 30 minutos entendemos seu cenário e sugerimos um plano claro para aplicar I.A e automação no seu negócio.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- What We Do Section -->
+    <section id="solucoes">
+        <div class="container">
+            <div class="fade-in">
+                <h2 class="section-title" style="text-align: center;">
+                    Nossas soluções unem tecnologia, velocidade e clareza.
+                </h2>
+            </div>
+            <div class="grid-cards">
+                <div class="card fade-in">
+                    <span class="card-icon">📊</span>
+                    <h3 class="card-title">+ROI</h3>
+                    <p class="card-description">
+                        Rastreamento que mostra exatamente o que dá lucro.
+                    </p>
+                </div>
+                <div class="card fade-in">
+                    <span class="card-icon">💰</span>
+                    <h3 class="card-title">-Custos</h3>
+                    <p class="card-description">
+                        Automação que corta tarefas repetitivas.
+                    </p>
+                </div>
+                <div class="card fade-in">
+                    <span class="card-icon">⚡</span>
+                    <h3 class="card-title">+Velocidade</h3>
+                    <p class="card-description">
+                        I.A que gera, resume e decide mais rápido.
+                    </p>
+                </div>
+                <div class="card fade-in">
+                    <span class="card-icon">🎯</span>
+                    <h3 class="card-title">+Clareza</h3>
+                    <p class="card-description">
+                        Dashboards simples para agir hoje.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problems Section -->
+    <section id="problemas">
+        <div class="container">
+            <div class="fade-in">
+                <h2 class="section-title" style="text-align: center;">
+                    Os problemas que mais vemos nas empresas
+                </h2>
+            </div>
+            <div class="problems-list">
+                <div class="problem-item slide-in-left">
+                    <p class="problem-text">
+                        Você não sabe de onde vem o lucro (nem pra onde ele vai).
+                    </p>
+                </div>
+                <div class="problem-item slide-in-left">
+                    <p class="problem-text">
+                        Sua equipe perde tempo em tarefas manuais e repetitivas.
+                    </p>
+                </div>
+                <div class="problem-item slide-in-left">
+                    <p class="problem-text">
+                        Os relatórios são confusos, e as decisões demoram.
+                    </p>
+                </div>
+                <div class="problem-item slide-in-left">
+                    <p class="problem-text">
+                        Suas ferramentas não se integram entre si.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How We Solve Section -->
+    <section id="como-resolvemos">
+        <div class="container">
+            <div class="fade-in">
+                <h2 class="section-title" style="text-align: center;">
+                    Como transformamos dados e automação em resultado
+                </h2>
+            </div>
+            <div class="solutions-grid">
+                <div class="solution-card scale-in">
+                    <div class="solution-number">1</div>
+                    <h3 class="solution-title">I.A aplicada</h3>
+                    <p class="solution-description">
+                        Geração de textos, relatórios e insights prontos pra ação.
+                    </p>
+                </div>
+                <div class="solution-card scale-in">
+                    <div class="solution-number">2</div>
+                    <h3 class="solution-title">Automação inteligente</h3>
+                    <p class="solution-description">
+                        Fluxos que reduzem retrabalho e tempo operacional.
+                    </p>
+                </div>
+                <div class="solution-card scale-in">
+                    <div class="solution-number">3</div>
+                    <h3 class="solution-title">Trackeamento completo</h3>
+                    <p class="solution-description">
+                        Métricas reais, para decisões baseadas em fatos.
+                    </p>
+                </div>
+                <div class="solution-card scale-in">
+                    <div class="solution-number">4</div>
+                    <h3 class="solution-title">Implementação rápida</h3>
+                    <p class="solution-description">
+                        De 7 a 21 dias, com total acompanhamento.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section id="autoridade">
+        <div class="container">
+            <div class="fade-in">
+                <h2 class="section-title" style="text-align: center;">
+                    Por que empresas nos escolhem
+                </h2>
+            </div>
+            <div class="trust-grid">
+                <div class="trust-item fade-in">
+                    <div class="trust-icon">🚀</div>
+                    <h3 class="trust-title">Implementação ágil</h3>
+                    <p class="trust-description">
+                        Resultados visíveis em menos de 3 semanas.
+                    </p>
+                </div>
+                <div class="trust-item fade-in">
+                    <div class="trust-icon">🔍</div>
+                    <h3 class="trust-title">Transparência total</h3>
+                    <p class="trust-description">
+                        Você entende cada passo e cada dado.
+                    </p>
+                </div>
+                <div class="trust-item fade-in">
+                    <div class="trust-icon">💎</div>
+                    <h3 class="trust-title">Foco em lucro</h3>
+                    <p class="trust-description">
+                        Não falamos em vaidade, falamos em resultado.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final Section -->
+    <section id="diagnostico">
+        <div class="container">
+            <div class="cta-section">
+                <div class="cta-content fade-in">
+                    <h2 class="cta-title">
+                        Diagnóstico + Consultoria gratuita para aplicar I.A, automação e trackeamento no seu negócio
+                    </h2>
+                    <a href="#contact" class="btn btn-primary">
+                        <span>Começar meu diagnóstico agora</span>
+                    </a>
+                    <p class="cta-note">
+                        Sem compromisso. Entenda seu cenário e descubra como escalar com dados reais.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 AI·SCALE. Todos os direitos reservados.</p>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Política de Privacidade</a>
+                    <a href="#" class="footer-link">Termos de Uso</a>
+                    <a href="#" class="footer-link">Contato</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll header effect
+        const header = document.getElementById('header');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+
+            lastScroll = currentScroll;
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .scale-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Button ripple effect
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const rect = this.getBoundingClientRect();
+                const ripple = document.createElement('span');
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255, 255, 255, 0.3)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s ease-out';
+                ripple.style.pointerEvents = 'none';
+
+                this.appendChild(ripple);
+
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navCta = document.querySelector('.nav-cta');
+
+        menuToggle.addEventListener('click', () => {
+            navCta.classList.toggle('show');
+        });
+
+        // Parallax effect for hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero && scrolled < window.innerHeight) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Add stagger delay to animated elements
+        document.querySelectorAll('.grid-cards .card').forEach((card, index) => {
+            card.style.transitionDelay = `${index * 0.1}s`;
+        });
+
+        document.querySelectorAll('.problem-item').forEach((item, index) => {
+            item.style.transitionDelay = `${index * 0.1}s`;
+        });
+
+        document.querySelectorAll('.solution-card').forEach((card, index) => {
+            card.style.transitionDelay = `${index * 0.1}s`;
+        });
+
+        document.querySelectorAll('.trust-item').forEach((item, index) => {
+            item.style.transitionDelay = `${index * 0.15}s`;
+        });
+
+        // Performance optimization - disable animations on low-end devices
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.querySelectorAll('*').forEach(el => {
+                el.style.animation = 'none';
+                el.style.transition = 'none';
+            });
+        }
+    </script>
+</body>
+</html>
