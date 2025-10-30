@@ -23,6 +23,18 @@
             --glass-border: rgba(139, 92, 246, 0.1);
         }
 
+        /* Dark Purple Theme for Budget Version */
+        body.theme-dark-purple {
+            --bg-primary: #1a0b2e;
+            --bg-secondary: #0f0620;
+            --purple-primary: #4c1d95;
+            --purple-secondary: #5b21b6;
+            --purple-light: #6d28d9;
+            --purple-dark: #3b0764;
+            --glass-bg: rgba(76, 29, 149, 0.05);
+            --glass-border: rgba(76, 29, 149, 0.1);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -41,6 +53,7 @@
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            transition: background-color 0.5s ease;
         }
 
         /* Header */
@@ -53,13 +66,22 @@
             background: rgba(10, 10, 10, 0.8);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(139, 92, 246, 0.1);
-            transition: all 0.3s ease;
+            border-bottom: 1px solid var(--glass-border);
+            transition: all 0.5s ease;
+        }
+
+        body.theme-dark-purple header {
+            background: rgba(26, 11, 46, 0.8);
         }
 
         header.scrolled {
             background: rgba(10, 10, 10, 0.95);
             box-shadow: 0 4px 30px rgba(139, 92, 246, 0.1);
+        }
+
+        body.theme-dark-purple header.scrolled {
+            background: rgba(26, 11, 46, 0.95);
+            box-shadow: 0 4px 30px rgba(76, 29, 149, 0.1);
         }
 
         nav {
@@ -79,6 +101,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             letter-spacing: -0.5px;
+            transition: all 0.5s ease;
         }
 
         .nav-cta {
@@ -117,6 +140,11 @@
             background: linear-gradient(135deg, var(--purple-primary), var(--purple-secondary));
             color: var(--text-primary);
             box-shadow: 0 10px 40px rgba(139, 92, 246, 0.3);
+            transition: all 0.5s ease;
+        }
+
+        body.theme-dark-purple .btn-primary {
+            box-shadow: 0 10px 40px rgba(76, 29, 149, 0.3);
         }
 
         .btn-primary::before {
@@ -138,6 +166,10 @@
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 15px 50px rgba(139, 92, 246, 0.4);
+        }
+
+        body.theme-dark-purple .btn-primary:hover {
+            box-shadow: 0 15px 50px rgba(76, 29, 149, 0.4);
         }
 
         .btn span {
@@ -176,7 +208,7 @@
 
         /* Hero Section */
         .hero {
-            min-height: 100vh;
+            min-height: 80vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -184,6 +216,7 @@
             position: relative;
             overflow: hidden;
             padding-top: 6rem;
+            padding-bottom: 2rem;
         }
 
         .hero::before {
@@ -195,6 +228,11 @@
             height: 200%;
             background: radial-gradient(circle at center, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
             animation: pulse 8s ease-in-out infinite;
+            transition: background 0.5s ease;
+        }
+
+        body.theme-dark-purple .hero::before {
+            background: radial-gradient(circle at center, rgba(76, 29, 149, 0.15) 0%, transparent 70%);
         }
 
         @keyframes pulse {
@@ -209,7 +247,7 @@
         }
 
         .hero-title {
-            font-size: clamp(2.5rem, 7vw, 5.5rem);
+            font-size: clamp(2.5rem, 7vw, 4.5rem);
             font-weight: 900;
             line-height: 1.1;
             margin-bottom: 1.5rem;
@@ -218,6 +256,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            transition: all 0.5s ease;
         }
 
         .hero-subtitle {
@@ -228,16 +267,232 @@
             line-height: 1.5;
         }
 
-        .hero-cta {
-            margin-bottom: 1.5rem;
+        /* Choose Path Section */
+        .choose-path {
+            padding: 6rem 0 3rem;
         }
 
-        .hero-note {
+        .path-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .path-card {
+            background: var(--glass-bg);
+            border: 2px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 3rem 2.5rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .path-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(168, 85, 247, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .path-card:hover::before {
+            opacity: 1;
+        }
+
+        .path-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--purple-primary);
+            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.2);
+        }
+
+        body.theme-dark-purple .path-card:hover {
+            box-shadow: 0 20px 60px rgba(76, 29, 149, 0.2);
+        }
+
+        .path-card.selected {
+            border-color: var(--purple-primary);
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(168, 85, 247, 0.05));
+            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.3);
+        }
+
+        body.theme-dark-purple .path-card.selected {
+            box-shadow: 0 20px 60px rgba(76, 29, 149, 0.3);
+        }
+
+        .path-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .path-card-icon {
+            font-size: 2.5rem;
+        }
+
+        .path-card-check {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .path-card.selected .path-card-check {
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-secondary));
+            border-color: var(--purple-primary);
+        }
+
+        .path-card-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .path-card-description {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Support Section */
+        .support-section {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .support-box {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(168, 85, 247, 0.05));
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            max-width: 600px;
+            margin: 2rem auto 0;
+            transition: all 0.5s ease;
+        }
+
+        .support-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .support-text {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+
+        /* Dynamic Content Section */
+        .dynamic-content {
+            padding: 5rem 0;
+        }
+
+        .content-version {
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.5s ease, max-height 0.5s ease;
+        }
+
+        .content-version.active {
+            opacity: 1;
+            max-height: 2000px;
+        }
+
+        .steps-list {
+            max-width: 900px;
+            margin: 3rem auto 0;
+            counter-reset: step-counter;
+        }
+
+        .step-item {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-left: 3px solid var(--purple-primary);
+            border-radius: 12px;
+            padding: 2rem 2rem 2rem 4rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            transition: all 0.5s ease;
+        }
+
+        .step-item::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 800;
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
+            transition: all 0.5s ease;
+        }
+
+        body.theme-dark-purple .step-item::before {
+            box-shadow: 0 5px 15px rgba(76, 29, 149, 0.3);
+        }
+
+        .step-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 40px rgba(139, 92, 246, 0.15);
+        }
+
+        body.theme-dark-purple .step-item:hover {
+            box-shadow: 0 10px 40px rgba(76, 29, 149, 0.15);
+        }
+
+        .step-text {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .obs-note {
+            background: rgba(139, 92, 246, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
             font-size: 0.95rem;
             color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
             line-height: 1.6;
+            transition: all 0.5s ease;
+        }
+
+        .cta-button-container {
+            text-align: center;
+            margin-top: 3rem;
         }
 
         /* Grid Cards */
@@ -272,6 +527,10 @@
             transition: opacity 0.4s ease;
         }
 
+        body.theme-dark-purple .card::before {
+            background: linear-gradient(135deg, rgba(76, 29, 149, 0.1), rgba(91, 33, 182, 0.1));
+        }
+
         .card:hover::before {
             opacity: 1;
         }
@@ -280,6 +539,10 @@
             transform: translateY(-8px);
             border-color: var(--purple-primary);
             box-shadow: 0 20px 60px rgba(139, 92, 246, 0.2);
+        }
+
+        body.theme-dark-purple .card:hover {
+            box-shadow: 0 20px 60px rgba(76, 29, 149, 0.2);
         }
 
         .card-icon {
@@ -321,7 +584,7 @@
             margin-bottom: 1.5rem;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+            transition: all 0.5s ease;
             position: relative;
             overflow: hidden;
         }
@@ -335,12 +598,17 @@
             font-size: 2rem;
             color: var(--purple-primary);
             opacity: 0.2;
+            transition: all 0.5s ease;
         }
 
         .problem-item:hover {
             transform: translateX(10px);
             border-left-color: var(--purple-light);
             box-shadow: 0 10px 40px rgba(139, 92, 246, 0.15);
+        }
+
+        body.theme-dark-purple .problem-item:hover {
+            box-shadow: 0 10px 40px rgba(76, 29, 149, 0.15);
         }
 
         .problem-text {
@@ -368,6 +636,10 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        body.theme-dark-purple .solution-card {
+            background: linear-gradient(135deg, rgba(76, 29, 149, 0.05), rgba(91, 33, 182, 0.05));
+        }
+
         .solution-card::after {
             content: '';
             position: absolute;
@@ -380,6 +652,10 @@
             transition: opacity 0.4s ease;
         }
 
+        body.theme-dark-purple .solution-card::after {
+            background: radial-gradient(circle, rgba(76, 29, 149, 0.15), transparent 70%);
+        }
+
         .solution-card:hover::after {
             opacity: 1;
         }
@@ -388,6 +664,10 @@
             transform: scale(1.05);
             border-color: var(--purple-primary);
             box-shadow: 0 25px 70px rgba(139, 92, 246, 0.25);
+        }
+
+        body.theme-dark-purple .solution-card:hover {
+            box-shadow: 0 25px 70px rgba(76, 29, 149, 0.25);
         }
 
         .solution-number {
@@ -404,6 +684,7 @@
             margin-bottom: 1.5rem;
             position: relative;
             z-index: 1;
+            transition: all 0.5s ease;
         }
 
         .solution-title {
@@ -446,6 +727,11 @@
             font-size: 2.5rem;
             margin: 0 auto 1.5rem;
             box-shadow: 0 15px 40px rgba(139, 92, 246, 0.3);
+            transition: all 0.5s ease;
+        }
+
+        body.theme-dark-purple .trust-icon {
+            box-shadow: 0 15px 40px rgba(76, 29, 149, 0.3);
         }
 
         .trust-title {
@@ -469,6 +755,11 @@
             position: relative;
             overflow: hidden;
             margin: 4rem 0;
+            transition: all 0.5s ease;
+        }
+
+        body.theme-dark-purple .cta-section {
+            background: linear-gradient(135deg, rgba(76, 29, 149, 0.1), rgba(91, 33, 182, 0.05));
         }
 
         .cta-section::before {
@@ -480,6 +771,11 @@
             height: 200%;
             background: radial-gradient(circle at center, rgba(139, 92, 246, 0.2), transparent 60%);
             animation: rotate 20s linear infinite;
+            transition: all 0.5s ease;
+        }
+
+        body.theme-dark-purple .cta-section::before {
+            background: radial-gradient(circle at center, rgba(76, 29, 149, 0.2), transparent 60%);
         }
 
         @keyframes rotate {
@@ -513,6 +809,7 @@
             border-top: 1px solid var(--glass-border);
             padding: 3rem 0;
             text-align: center;
+            transition: border-color 0.5s ease;
         }
 
         .footer-content {
@@ -611,7 +908,35 @@
 
             .hero {
                 padding-top: 5rem;
-                min-height: 90vh;
+                min-height: 70vh;
+            }
+
+            .choose-path {
+                padding: 4rem 0 2rem;
+            }
+
+            .path-cards {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .support-section {
+                padding: 3rem 0;
+            }
+
+            .dynamic-content {
+                padding: 3rem 0;
+            }
+
+            .step-item {
+                padding: 1.8rem 1.5rem 1.8rem 3.5rem;
+            }
+
+            .step-item::before {
+                left: 1rem;
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
             }
 
             .grid-cards {
@@ -653,6 +978,18 @@
                 font-size: 1.8rem;
             }
 
+            .path-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .path-card-title {
+                font-size: 1.4rem;
+            }
+
+            .support-title {
+                font-size: 1.6rem;
+            }
+
             .card {
                 padding: 2rem 1.5rem;
             }
@@ -675,6 +1012,13 @@
             background-size: 50px 50px;
             pointer-events: none;
             z-index: -1;
+            transition: all 0.5s ease;
+        }
+
+        body.theme-dark-purple .bg-grid {
+            background-image:
+                linear-gradient(rgba(76, 29, 149, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(76, 29, 149, 0.03) 1px, transparent 1px);
         }
     </style>
 </head>
@@ -687,8 +1031,8 @@
         <nav>
             <div class="logo">AI·SCALE</div>
             <button class="menu-toggle" id="menuToggle">☰</button>
-            <a href="#diagnostico" class="btn btn-primary nav-cta">
-                <span>📈 Diagnóstico Gratuito</span>
+            <a href="#dynamic-section" class="btn btn-primary nav-cta">
+                <span id="navCtaText">📊 Consultoria Gratuita</span>
             </a>
         </nav>
     </header>
@@ -698,19 +1042,124 @@
         <div class="container">
             <div class="hero-content fade-in">
                 <h1 class="hero-title">
-                    Implementamos I.A, automações e trackeamento para empresas que querem escalar com dados reais.
+                    I.A, Automações e Trackeamento
                 </h1>
                 <p class="hero-subtitle">
-                    Chega de achismos. Nós medimos, automatizamos e resolvemos o que trava o seu crescimento.
+                    Implementamos soluções no seu negócio para te dar mais tempo, clareza e resultados reais.
                 </p>
-                <div class="hero-cta">
-                    <a href="#diagnostico" class="btn btn-primary">
-                        <span>📈 Fazer meu diagnóstico gratuito</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Choose Path Section -->
+    <section class="choose-path" id="choose-path">
+        <div class="container">
+            <div class="fade-in">
+                <h2 class="section-title" style="text-align: center;">
+                    Escolha Seu Caminho
+                </h2>
+            </div>
+            <div class="path-cards">
+                <div class="path-card selected fade-in" id="pathConsultoria" data-path="consultoria">
+                    <div class="path-card-header">
+                        <span class="path-card-icon">📊</span>
+                        <div class="path-card-check">✅</div>
+                    </div>
+                    <h3 class="path-card-title">Quero Consultoria Grátis</h3>
+                    <p class="path-card-description">
+                        Não sei exatamente como posso aplicar essas soluções no meu negócio e preciso de clareza.
+                    </p>
+                </div>
+                <div class="path-card fade-in" id="pathOrcamento" data-path="orcamento">
+                    <div class="path-card-header">
+                        <span class="path-card-icon">💼</span>
+                        <div class="path-card-check"></div>
+                    </div>
+                    <h3 class="path-card-title">Quero Solicitar Orçamento</h3>
+                    <p class="path-card-description">
+                        Já sei o que preciso e gostaria de saber preços e prazos.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Section -->
+    <section class="support-section fade-in">
+        <div class="container">
+            <div class="support-box">
+                <h3 class="support-title">⚡ Atendimento Humanizado e Rápido</h3>
+                <p class="support-text">Respondemos em até 20 minutos.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dynamic Content Section -->
+    <section class="dynamic-content" id="dynamic-section">
+        <div class="container">
+            <!-- Version A: Consultoria -->
+            <div class="content-version active" id="contentConsultoria">
+                <div class="fade-in">
+                    <h2 class="section-title" style="text-align: center;">
+                        O Que Esperar
+                    </h2>
+                </div>
+                <div class="steps-list">
+                    <div class="step-item slide-in-left">
+                        <p class="step-text">
+                            Você preenche um formulário rápido
+                        </p>
+                    </div>
+                    <div class="step-item slide-in-left">
+                        <p class="step-text">
+                            Será redirecionado na mesma hora para nosso WhatsApp
+                        </p>
+                    </div>
+                    <div class="step-item slide-in-left">
+                        <p class="step-text">
+                            Te apresento o que você pode fazer com IA, Automações e Trackeamento no seu negócio
+                        </p>
+                    </div>
+                </div>
+                <div class="obs-note fade-in">
+                    <strong>Obs:</strong> Ao final da conversa, você receberá uma proposta personalizada. Não se sinta obrigado a fechar, a consultoria é realmente gratuita.
+                </div>
+                <div class="cta-button-container fade-in">
+                    <a href="#" class="btn btn-primary">
+                        <span>Solicitar Consultoria Gratuita</span>
                     </a>
                 </div>
-                <p class="hero-note">
-                    Em até 30 minutos entendemos seu cenário e sugerimos um plano claro para aplicar I.A e automação no seu negócio.
-                </p>
+            </div>
+
+            <!-- Version B: Orçamento -->
+            <div class="content-version" id="contentOrcamento">
+                <div class="fade-in">
+                    <h2 class="section-title" style="text-align: center;">
+                        O Que Esperar
+                    </h2>
+                </div>
+                <div class="steps-list">
+                    <div class="step-item slide-in-left">
+                        <p class="step-text">
+                            Você preenche um formulário com detalhes do seu projeto
+                        </p>
+                    </div>
+                    <div class="step-item slide-in-left">
+                        <p class="step-text">
+                            Será redirecionado na mesma hora para nosso WhatsApp
+                        </p>
+                    </div>
+                    <div class="step-item slide-in-left">
+                        <p class="step-text">
+                            Conversamos sobre seu projeto, alinhamos expectativas e você recebe uma proposta detalhada em até 24 horas
+                        </p>
+                    </div>
+                </div>
+                <div class="cta-button-container fade-in">
+                    <a href="#" class="btn btn-primary">
+                        <span>Solicitar Orçamento</span>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -864,25 +1313,6 @@
         </div>
     </section>
 
-    <!-- CTA Final Section -->
-    <section id="diagnostico">
-        <div class="container">
-            <div class="cta-section">
-                <div class="cta-content fade-in">
-                    <h2 class="cta-title">
-                        Diagnóstico + Consultoria gratuita para aplicar I.A, automação e trackeamento no seu negócio
-                    </h2>
-                    <a href="#contact" class="btn btn-primary">
-                        <span>Começar meu diagnóstico agora</span>
-                    </a>
-                    <p class="cta-note">
-                        Sem compromisso. Entenda seu cenário e descubra como escalar com dados reais.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -898,6 +1328,71 @@
     </footer>
 
     <script>
+        // Theme switching functionality
+        let currentTheme = 'consultoria'; // Default theme
+
+        function switchTheme(theme) {
+            const body = document.body;
+            const navCtaText = document.getElementById('navCtaText');
+
+            if (theme === 'orcamento') {
+                body.classList.add('theme-dark-purple');
+                navCtaText.textContent = '💼 Solicitar Orçamento';
+                currentTheme = 'orcamento';
+            } else {
+                body.classList.remove('theme-dark-purple');
+                navCtaText.textContent = '📊 Consultoria Gratuita';
+                currentTheme = 'consultoria';
+            }
+        }
+
+        // Path card selection
+        const pathCards = document.querySelectorAll('.path-card');
+        const contentVersions = document.querySelectorAll('.content-version');
+
+        pathCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const path = this.getAttribute('data-path');
+
+                // Remove selected class from all cards
+                pathCards.forEach(c => {
+                    c.classList.remove('selected');
+                    const check = c.querySelector('.path-card-check');
+                    check.textContent = '';
+                });
+
+                // Add selected class to clicked card
+                this.classList.add('selected');
+                const check = this.querySelector('.path-card-check');
+                check.textContent = '✅';
+
+                // Hide all content versions
+                contentVersions.forEach(content => {
+                    content.classList.remove('active');
+                });
+
+                // Show selected content version
+                if (path === 'consultoria') {
+                    document.getElementById('contentConsultoria').classList.add('active');
+                    switchTheme('consultoria');
+                } else if (path === 'orcamento') {
+                    document.getElementById('contentOrcamento').classList.add('active');
+                    switchTheme('orcamento');
+                }
+
+                // Smooth scroll to dynamic section
+                const dynamicSection = document.getElementById('dynamic-section');
+                const headerOffset = 100;
+                const elementPosition = dynamicSection.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
         // Scroll header effect
         const header = document.getElementById('header');
         let lastScroll = 0;
