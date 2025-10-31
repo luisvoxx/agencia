@@ -914,7 +914,7 @@
         <nav>
             <img src="https://i.ibb.co/Nfw0Lcm/Untitled-design.png" alt="Dipfy - I.A, Automações e Trackeamento" class="logo">
             <button class="menu-toggle" id="menuToggle">☰</button>
-            <a href="#dynamic-section" class="btn btn-primary nav-cta">
+            <a href="https://tally.so/r/wAoX00" class="btn btn-primary nav-cta" id="navCtaButton">
                 <span id="navCtaText">📊 Consultoria Gratuita</span>
             </a>
         </nav>
@@ -1006,7 +1006,7 @@
                     <strong>Obs:</strong> Ao final da conversa, você receberá uma proposta personalizada. Não se sinta obrigado a fechar, a consultoria é realmente gratuita.
                 </div>
                 <div class="cta-button-container fade-in">
-                    <a href="#" class="btn btn-primary">
+                    <a href="https://tally.so/r/wAoX00" class="btn btn-primary" id="ctaButtonConsultoria">
                         <span>Solicitar Consultoria Gratuita</span>
                     </a>
                 </div>
@@ -1037,7 +1037,7 @@
                     </div>
                 </div>
                 <div class="cta-button-container fade-in">
-                    <a href="#" class="btn btn-primary">
+                    <a href="https://tally.so/r/mVR6AJ" class="btn btn-primary" id="ctaButtonOrcamento">
                         <span>Solicitar Orçamento</span>
                     </a>
                 </div>
@@ -1098,14 +1098,19 @@
 
         function switchTheme(theme) {
             const body = document.body;
+            const navCtaButton = document.getElementById('navCtaButton');
             const navCtaText = document.getElementById('navCtaText');
 
             if (theme === 'orcamento') {
+                // Switch to purple theme (Orçamento)
                 body.classList.add('theme-purple');
+                navCtaButton.href = 'https://tally.so/r/mVR6AJ';
                 navCtaText.textContent = '💼 Solicitar Orçamento';
                 currentTheme = 'orcamento';
             } else {
+                // Switch to blue theme (Consultoria)
                 body.classList.remove('theme-purple');
+                navCtaButton.href = 'https://tally.so/r/wAoX00';
                 navCtaText.textContent = '📊 Consultoria Gratuita';
                 currentTheme = 'consultoria';
             }
