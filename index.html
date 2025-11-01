@@ -97,20 +97,30 @@
         }
 
         .logo {
-            height: 40px;
-            width: auto;
+            height: 40px !important;
+            max-height: 40px !important;
+            min-height: 40px !important;
+            width: auto !important;
             transition: transform 0.3s ease;
             display: block;
             cursor: pointer;
+            object-fit: contain;
         }
 
         .logo:hover {
             transform: scale(1.05);
         }
 
+        /* Garantir que o header não force tamanho diferente */
+        header img {
+            height: inherit !important;
+        }
+
         @media (max-width: 768px) {
             .logo {
-                height: 28px;
+                height: 28px !important;
+                max-height: 28px !important;
+                min-height: 28px !important;
             }
         }
 
@@ -788,10 +798,6 @@
         @media (max-width: 768px) {
             nav {
                 padding: 1rem 1.5rem;
-            }
-
-            .logo {
-                font-size: 1.3rem;
             }
 
             .menu-toggle {
